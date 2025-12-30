@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التجارة الخارجية السودانية 2015-2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1b4144;
+            --accent-green: #c3ff01;
+            --accent-coral: #ff7966;
+            --accent-blue: #0867ff;
+            --light-bg: #f5f5f5;
+            --white: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.9;
+        }
+
+        .header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header .period {
+            display: inline-block;
+            background: var(--accent-green);
+            color: var(--primary);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav {
+            background: var(--white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: var(--light-bg);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .nav-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-card.green { border-top-color: #2ecc71; }
+        .stat-card.red { border-top-color: #e74c3c; }
+        .stat-card.blue { border-top-color: #3498db; }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-unit {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .stat-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .insight-box {
+            background: #f8f9fa;
+            border-right: 4px solid var(--primary);
+            padding: 1.2rem 1.5rem;
+            margin: 1.2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .insight-box.warning {
+            background: #fff8f6;
+            border-right-color: #e74c3c;
+        }
+
+        .insight-box.question {
+            background: #f6f9ff;
+            border-right-color: #3498db;
+        }
+
+        .insight-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
+        }
+
+        .insight-box.warning h4 { color: #c0392b; }
+        .insight-box.question h4 { color: #2980b9; }
+
+        .insight-box p, .insight-box ul {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .insight-box ul {
+            margin-top: 0.5rem;
+            padding-right: 1.2rem;
+        }
+
+        .insight-box li {
+            margin-bottom: 0.3rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+            margin: 1.2rem 0;
+        }
+
+        .chart-container.tall {
+            height: 400px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.8rem;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background: #fafafa;
+        }
+
+        .data-table .negative {
+            color: #c0392b;
+        }
+
+        .data-table .positive {
+            color: #27ae60;
+        }
+
+        .progress-item {
+            margin: 0.8rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            height: 22px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 8px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .country-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .country-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .country-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .country-percent {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .big-question {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .big-question h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .big-question p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1rem;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-item {
+            text-align: center;
+            padding: 1.2rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .comparison-item.before { background: #e8f5e9; }
+        .comparison-item.after { background: #ffebee; }
+
+        .comparison-arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .comparison-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .comparison-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-right: 25px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-right: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -23px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            border: 2px solid var(--primary);
+        }
+
+        .timeline-item.crisis::before {
+            background: #e74c3c;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        .timeline-content {
+            background: #fafafa;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-top: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--accent-green);
+            text-decoration: none;
+        }
+
+        .highlight-stat {
+            display: inline-block;
+            background: rgba(195, 255, 1, 0.2);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6rem; }
+            .stat-value { font-size: 1.5rem; }
+            .nav-btn { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
+            .container { padding: 1rem; }
+            .card { padding: 1.2rem; }
+            .comparison-row { grid-template-columns: 1fr; gap: 0.5rem; }
+            .comparison-arrow { transform: rotate(90deg); }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            background: var(--white);
+            color: var(--primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>التجارة الخارجية السودانية</h1>
+        <p class="subtitle">عشر سنوات من البيانات: ماذا تخبرنا الأرقام عن اقتصادنا؟</p>
+        <span class="period">2015 - 2025</span>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSection('overview')">الصورة الكاملة</button>
+            <button class="nav-btn" onclick="showSection('exports')">الصادرات</button>
+            <button class="nav-btn" onclick="showSection('imports')">الواردات</button>
+            <button class="nav-btn" onclick="showSection('countries')">الشركاء التجاريون</button>
+            <button class="nav-btn" onclick="showSection('questions')">أسئلة للتفكير</button>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-label">الصادرات (يناير-سبتمبر 2025)</div>
+                    <div class="stat-value">1.79 <span class="stat-unit">مليار $</span></div>
+                    <div class="stat-note">↓ 43% مقارنة بنفس الفترة 2024</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="stat-label">الواردات (يناير-سبتمبر 2025)</div>
+                    <div class="stat-value">4.28 <span class="stat-unit">مليار $</span></div>
+                    <div class="stat-note">السودان يستورد 2.4 ضعف ما يصدر</div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-label">العجز التجاري</div>
+                    <div class="stat-value">2.49 <span class="stat-unit">مليار $</span></div>
+                    <div class="stat-note">في 9 أشهر فقط</div>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <h4>ما هو العجز التجاري؟</h4>
+                <p>
+                    العجز يعني أن السودان يشتري من العالم أكثر مما يبيع له. الفرق - <span class="highlight-stat">2.49 مليار دولار</span> - يجب تغطيته بطريقة ما: إما بالاستدانة، أو استنزاف الاحتياطيات، أو المساعدات الخارجية.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">عقد من العجز التجاري المستمر (2015-2025)</div>
+                <div class="chart-container tall">
+                    <canvas id="decadeChart"></canvas>
+                </div>
+                <div class="insight-box warning">
+                    <h4>ماذا يخبرنا هذا الرسم؟</h4>
+                    <p>
+                        خلال 10 سنوات كاملة، لم يحقق السودان فائضاً تجارياً ولو لسنة واحدة. الواردات دائماً أعلى - أحياناً بثلاثة أضعاف. في 2022 وصل العجز لأعلى مستوى: <span class="highlight-stat">6.7 مليار دولار</span>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">حجم التجارة الإجمالي: انكماش حاد</div>
+                <div class="chart-container">
+                    <canvas id="volumeChart"></canvas>
+                </div>
+                <div class="insight-box question">
+                    <h4>سؤال للتأمل</h4>
+                    <p>
+                        حجم التجارة الكلي انخفض من <span class="highlight-stat">15.4 مليار $</span> في 2022 إلى <span class="highlight-stat">6 مليار $</span> المتوقع في 2025. 
+                        هل هذا الانكماش "تحسن" لأن العجز قل؟ أم أنه علامة على اقتصاد يتقلص وينعزل عن العالم؟
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">العجز التجاري عبر السنوات</div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>السنة</th>
+                            <th>الصادرات (مليار $)</th>
+                            <th>الواردات (مليار $)</th>
+                            <th>العجز (مليار $)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2015</td>
+                            <td>3.17</td>
+                            <td>9.51</td>
+                            <td class="negative">-6.34</td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>3.09</td>
+                            <td>8.31</td>
+                            <td class="negative">-5.22</td>
+                        </tr>
+                        <tr>
+                            <td>2017</td>
+                            <td>4.10</td>
+                            <td>9.13</td>
+                            <td class="negative">-5.03</td>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>3.48</td>
+                            <td>7.85</td>
+                            <td class="negative">-4.37</td>
+                        </tr>
+                        <tr>
+                            <td>2019</td>
+                            <td>3.73</td>
+                            <td>9.29</td>
+                            <td class="negative">-5.56</td>
+                        </tr>
+                        <tr>
+                            <td>2020</td>
+                            <td>3.80</td>
+                            <td>9.84</td>
+                            <td class="negative">-6.04</td>
+                        </tr>
+                        <tr>
+                            <td>2021</td>
+                            <td>5.03</td>
+                            <td>9.89</td>
+                            <td class="negative">-4.87</td>
+                        </tr>
+                        <tr style="background: #fff3cd;">
+                            <td>2022</td>
+                            <td>4.36</td>
+                            <td>11.09</td>
+                            <td class="negative"><strong>-6.74</strong></td>
+                        </tr>
+                        <tr style="background: #ffe5e5;">
+                            <td>2023</td>
+                            <td>3.63</td>
+                            <td>7.50</td>
+                            <td class="negative">-3.87</td>
+                        </tr>
+                        <tr style="background: #ffe5e5;">
+                            <td>2024</td>
+                            <td>3.13</td>
+                            <td>4.91</td>
+                            <td class="negative">-1.78</td>
+                        </tr>
+                        <tr style="background: #ffcccc;">
+                            <td>2025 (9 أشهر)</td>
+                            <td>1.79</td>
+                            <td>4.28</td>
+                            <td class="negative">-2.49</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="insight-box warning">
+                    <h4>الصفوف المظللة بالأحمر = سنوات الحرب</h4>
+                    <p>
+                        لاحظ كيف انخفض حجم التجارة بشكل حاد بعد أبريل 2023. العجز "تحسن" ظاهرياً، لكن السبب هو انهيار القدرة على الاستيراد - وهذا يعني نقص حاد في السلع الأساسية للمواطنين.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Exports Section -->
+        <section id="exports" class="section">
+            
+            <div class="card">
+                <div class="card-title">ماذا يبيع السودان للعالم؟</div>
+                <div class="chart-container tall">
+                    <canvas id="exportsPieChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">تطور الصادرات الرئيسية (2019-2024)</div>
+                <div class="chart-container tall">
+                    <canvas id="exportsTimelineChart"></canvas>
+                </div>
+                <div class="insight-box warning">
+                    <h4>الذهب يهيمن على كل شيء</h4>
+                    <p>
+                        في 2022، شكّل الذهب <span class="highlight-stat">46%</span> من إجمالي الصادرات. وفي 2025، ارتفعت النسبة إلى <span class="highlight-stat">59%</span>. 
+                        هذا ليس لأن صادرات الذهب زادت، بل لأن باقي الصادرات انهارت.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">أرقام الصادرات بالتفصيل</div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>الذهب</span>
+                        <span>1,050 مليون $ (59%)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 59%; background: #f1c40f;">59%</div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>الماشية</span>
+                        <span>289 مليون $ (16%)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 16%; background: #1b4144;">16%</div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>السمسم</span>
+                        <span>181 مليون $ (10%)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%; background: #27ae60;">10%</div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>الصمغ العربي</span>
+                        <span>67 مليون $ (4%)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 4%; background: #e74c3c;">4%</div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>حب البطيخ</span>
+                        <span>46 مليون $ (3%)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 3%; background: #3498db;">3%</div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>القطن</span>
+                        <span>45 مليون $ (2.5%)</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 2.5%; background: #9b59b6;">2.5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="big-question">
+                <h3>السودان ينتج 80% من الصمغ العربي في العالم</h3>
+                <p>لكنه يصدره خاماً بـ 67 مليون $ فقط. لماذا لا نصنّعه ونضاعف قيمته؟</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">مقارنة: صادرات السمسم</div>
+                <div class="comparison-row">
+                    <div class="comparison-item before">
+                        <div class="comparison-label">2019</div>
+                        <div class="comparison-value">772 مليون $</div>
+                    </div>
+                    <div class="comparison-arrow">←</div>
+                    <div class="comparison-item after">
+                        <div class="comparison-label">2025 (9 أشهر)</div>
+                        <div class="comparison-value">181 مليون $</div>
+                    </div>
+                </div>
+                <div class="insight-box question">
+                    <h4>انخفاض 77%</h4>
+                    <p>
+                        السمسم السوداني من أجود أنواع السمسم عالمياً. في 2019 كان يدر 772 مليون دولار سنوياً. 
+                        الآن بالكاد يصل لربع هذا الرقم. أين ذهب الإنتاج؟ من يزرع الأرض؟
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Imports Section -->
+        <section id="imports" class="section">
+            
+            <div class="card">
+                <div class="card-title">على ماذا ينفق السودان عملته الصعبة؟</div>
+                <div class="chart-container tall">
+                    <canvas id="importsPieChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">تطور فاتورة الواردات (2019-2024)</div>
+                <div class="chart-container tall">
+                    <canvas id="importsTimelineChart"></canvas>
+                </div>
+                <div class="insight-box warning">
+                    <h4>صدمة 2022</h4>
+                    <p>
+                        في 2022، قفزت فاتورة البترول من 1.25 مليار $ إلى <span class="highlight-stat">2.9 مليار $</span> - زيادة 130% في عام واحد بسبب الأزمة العالمية. 
+                        هذا وحده رفع العجز التجاري لأعلى مستوى تاريخي.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">تفاصيل الواردات 2025</div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showTab('food-tab')">الغذاء</button>
+                    <button class="tab-btn" onclick="showTab('industry-tab')">الصناعة</button>
+                    <button class="tab-btn" onclick="showTab('fuel-tab')">الوقود</button>
+                </div>
+
+                <div id="food-tab" class="tab-content active">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;">المواد الغذائية: 1.3 مليار $ (30% من الواردات)</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>المنتج</th>
+                                <th>2022</th>
+                                <th>2024</th>
+                                <th>التغير</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>القمح والدقيق</td>
+                                <td>2,854 م $</td>
+                                <td>1,249 م $</td>
+                                <td class="negative">-56%</td>
+                            </tr>
+                            <tr>
+                                <td>السكر</td>
+                                <td>647 م $</td>
+                                <td>661 م $</td>
+                                <td class="positive">+2%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="insight-box warning">
+                        <h4>انخفاض واردات القمح 56%</h4>
+                        <p>
+                            هل هذا لأن السودان أصبح ينتج قمحه محلياً؟ لا. 
+                            الانخفاض يعني أن الناس لا يستطيعون شراء الخبز، أو أن الموانئ والطرق معطلة، أو أنه لا توجد دولارات كافية للاستيراد.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="industry-tab" class="tab-content">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;">السلع الصناعية والآلات</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الفئة</th>
+                                <th>2022</th>
+                                <th>2024</th>
+                                <th>التغير</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>السلع المصنعة</td>
+                                <td>1,404 م $</td>
+                                <td>667 م $</td>
+                                <td class="negative">-52%</td>
+                            </tr>
+                            <tr>
+                                <td>الآلات والمعدات</td>
+                                <td>1,080 م $</td>
+                                <td>448 م $</td>
+                                <td class="negative">-59%</td>
+                            </tr>
+                            <tr>
+                                <td>الأدوية</td>
+                                <td>572 م $</td>
+                                <td>300 م $</td>
+                                <td class="negative">-48%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="insight-box question">
+                        <h4>واردات الأدوية انخفضت للنصف</h4>
+                        <p>
+                            في وقت الحرب والأزمة الصحية، السودان يستورد أدوية أقل بـ 48% من 2022. 
+                            كيف يؤثر هذا على المستشفيات؟ على المرضى المزمنين؟ على الأطفال؟
+                        </p>
+                    </div>
+                </div>
+
+                <div id="fuel-tab" class="tab-content">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;">المنتجات البترولية</h4>
+                    <div class="comparison-row">
+                        <div class="comparison-item before">
+                            <div class="comparison-label">2022</div>
+                            <div class="comparison-value">2.9 مليار $</div>
+                        </div>
+                        <div class="comparison-arrow">←</div>
+                        <div class="comparison-item after">
+                            <div class="comparison-label">2024</div>
+                            <div class="comparison-value">891 مليون $</div>
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>انخفاض 69% في واردات الوقود</h4>
+                        <p>
+                            هذا يفسر طوابير البنزين والانقطاعات. السودان ببساطة لا يستورد وقوداً كافياً لتشغيل الاقتصاد.
+                            بدون وقود: لا نقل، لا كهرباء، لا مصانع، لا مضخات مياه للزراعة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="big-question">
+                <h3>السودان يملك أراضٍ زراعية شاسعة ومياه النيل</h3>
+                <p>لكنه ينفق 1.3 مليار $ سنوياً على استيراد الطعام. لماذا لا نزرع قمحنا وسكرنا؟</p>
+            </div>
+
+        </section>
+
+        <!-- Countries Section -->
+        <section id="countries" class="section">
+            
+            <div class="card">
+                <div class="card-title">أين يذهب ما نبيع؟ (وجهات الصادرات 2022)</div>
+                <div class="chart-container">
+                    <canvas id="exportDestChart"></canvas>
+                </div>
+                <div class="country-grid" style="margin-top: 1.5rem;">
+                    <div class="country-card" style="background: #e8f5e9;">
+                        <div class="country-name">الإمارات</div>
+                        <div class="country-value">2.23 مليار $</div>
+                        <div class="country-percent">51% من الصادرات</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">السعودية</div>
+                        <div class="country-value">505 مليون $</div>
+                        <div class="country-percent">12%</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">مصر</div>
+                        <div class="country-value">413 مليون $</div>
+                        <div class="country-percent">9%</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">الصين</div>
+                        <div class="country-value">285 مليون $</div>
+                        <div class="country-percent">7%</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">الهند</div>
+                        <div class="country-value">94 مليون $</div>
+                        <div class="country-percent">2%</div>
+                    </div>
+                </div>
+                <div class="insight-box warning">
+                    <h4>نصف الصادرات لدولة واحدة</h4>
+                    <p>
+                        الإمارات تستقبل 51% من صادرات السودان - معظمها ذهب. 
+                        ماذا يحدث لو غيرت الإمارات سياستها التجارية؟ أو فرضت شروطاً جديدة؟ هل لدينا بدائل؟
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">من أين نشتري؟ (مصادر الواردات 2022)</div>
+                <div class="chart-container">
+                    <canvas id="importSourceChart"></canvas>
+                </div>
+                <div class="country-grid" style="margin-top: 1.5rem;">
+                    <div class="country-card" style="background: #ffebee;">
+                        <div class="country-name">الإمارات</div>
+                        <div class="country-value">2.23 مليار $</div>
+                        <div class="country-percent">20% من الواردات</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">الصين</div>
+                        <div class="country-value">1.19 مليار $</div>
+                        <div class="country-percent">11%</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">السعودية</div>
+                        <div class="country-value">1.13 مليار $</div>
+                        <div class="country-percent">10%</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">الهند</div>
+                        <div class="country-value">891 مليون $</div>
+                        <div class="country-percent">8%</div>
+                    </div>
+                    <div class="country-card">
+                        <div class="country-name">مصر</div>
+                        <div class="country-value">821 مليون $</div>
+                        <div class="country-percent">7%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">الميزان التجاري مع الشركاء الرئيسيين (2022)</div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>الدولة</th>
+                            <th>نبيع لها</th>
+                            <th>نشتري منها</th>
+                            <th>الميزان</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الإمارات</td>
+                            <td>2,233 م $</td>
+                            <td>2,233 م $</td>
+                            <td>متوازن ≈</td>
+                        </tr>
+                        <tr>
+                            <td>الصين</td>
+                            <td>285 م $</td>
+                            <td>1,186 م $</td>
+                            <td class="negative"><strong>-901 م $</strong></td>
+                        </tr>
+                        <tr>
+                            <td>السعودية</td>
+                            <td>505 م $</td>
+                            <td>1,131 م $</td>
+                            <td class="negative">-626 م $</td>
+                        </tr>
+                        <tr>
+                            <td>الهند</td>
+                            <td>94 م $</td>
+                            <td>891 م $</td>
+                            <td class="negative">-797 م $</td>
+                        </tr>
+                        <tr>
+                            <td>مصر</td>
+                            <td>413 م $</td>
+                            <td>821 م $</td>
+                            <td class="negative">-408 م $</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="insight-box question">
+                    <h4>مع الصين: نخسر 901 مليون $ سنوياً</h4>
+                    <p>
+                        نشتري من الصين آلات ومصنوعات بأضعاف ما نبيع لها. هل يمكننا إنتاج بعض هذه السلع محلياً؟ 
+                        أم على الأقل تصدير المزيد للصين لتقليل الفجوة؟
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Questions Section -->
+        <section id="questions" class="section">
+            
+            <div class="card">
+                <div class="card-title">أسئلة يطرحها الاقتصاد السوداني</div>
+                
+                <div class="insight-box question">
+                    <h4>1. لماذا نصدر الذهب خاماً؟</h4>
+                    <p>
+                        الذهب يشكل 59% من صادراتنا. لكننا نصدره كمعدن خام للإمارات. 
+                        لو صنعناه محلياً (مجوهرات، سبائك مختومة) هل ستزيد قيمته؟ 
+                        دول مثل إيطاليا وتركيا حولت الذهب المستورد لصناعة مجوهرات تصديرية ضخمة.
+                    </p>
+                </div>
+
+                <div class="insight-box question">
+                    <h4>2. أين ذهب القطن السوداني؟</h4>
+                    <p>
+                        في الخمسينيات، كان القطن السوداني من أجود أنواع القطن عالمياً ويشكل عصب الاقتصاد.
+                        اليوم يصدر بـ 45 مليون $ فقط - أقل من 3% من الصادرات.
+                        مشروع الجزيرة كان من أكبر مشاريع الري في العالم. ماذا حدث له؟
+                    </p>
+                </div>
+
+                <div class="insight-box question">
+                    <h4>3. لماذا نستورد السكر؟</h4>
+                    <p>
+                        السودان ينفق 661 مليون $ سنوياً على استيراد السكر.
+                        لكن لدينا مصانع سكر (كنانة، الجنيد، سكر النيل الأبيض).
+                        لماذا لا تنتج ما يكفي؟ هل المشكلة في الإدارة؟ التمويل؟ الصيانة؟ الحرب؟
+                    </p>
+                </div>
+
+                <div class="insight-box question">
+                    <h4>4. 80% من الصمغ العربي العالمي سوداني</h4>
+                    <p>
+                        الصمغ العربي يدخل في صناعة المشروبات الغازية، الأدوية، مستحضرات التجميل، والحلويات.
+                        شركات مثل كوكاكولا وبيبسي تعتمد عليه.
+                        لكننا نصدره خاماً بـ 67 مليون $ فقط. 
+                        لو أنشأنا مصانع لتكريره وتعبئته، كم ستكون قيمته؟
+                    </p>
+                </div>
+
+                <div class="insight-box question">
+                    <h4>5. من يستفيد من تجارة الذهب؟</h4>
+                    <p>
+                        1.05 مليار $ من الذهب تصدر سنوياً. 
+                        كم من هذا يذهب لخزينة الدولة؟ كم للمنتجين الصغار في مناطق التعدين؟ 
+                        كم يُهرَّب دون تسجيل؟ البيانات الرسمية قد لا تعكس الصورة الكاملة.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">الخط الزمني: كيف وصلنا إلى هنا؟</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2011</div>
+                        <div class="timeline-content">
+                            انفصال جنوب السودان - خسارة 75% من حقول النفط. السودان يتحول من مصدّر للنفط إلى مستورد.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015-2017</div>
+                        <div class="timeline-content">
+                            عجز تجاري مستمر حول 5-6 مليار $ سنوياً. اعتماد متزايد على الذهب كمصدر رئيسي للعملة الصعبة.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">ديسمبر 2018</div>
+                        <div class="timeline-content">
+                            بداية الثورة السودانية. احتجاجات اقتصادية تتحول لمطالب سياسية.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content">
+                            رفع السودان من قائمة الدول الراعية للإرهاب. آمال بعودة الاستثمارات والمساعدات.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2021</div>
+                        <div class="timeline-content">
+                            أفضل أداء للصادرات في العقد: 5.03 مليار $. لكن الانقلاب العسكري يجمد المساعدات الدولية.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-content">
+                            أسوأ عجز تجاري في التاريخ: 6.74 مليار $. صدمة أسعار الطاقة العالمية ترفع فاتورة البترول 130%.
+                        </div>
+                    </div>
+                    <div class="timeline-item crisis">
+                        <div class="timeline-year" style="color: #c0392b;">أبريل 2023</div>
+                        <div class="timeline-content" style="background: #fff5f5;">
+                            <strong>اندلاع الحرب.</strong> صراع مسلح يدمر البنية التحتية. نزوح الملايين. انهيار القطاعات الإنتاجية.
+                        </div>
+                    </div>
+                    <div class="timeline-item crisis">
+                        <div class="timeline-year" style="color: #c0392b;">2024-2025</div>
+                        <div class="timeline-content" style="background: #fff5f5;">
+                            انكماش حاد في التجارة. الصادرات تنهار 43%. الواردات تنخفض لكن ليس بسبب الاكتفاء - بل العجز عن الشراء.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="big-question">
+                <h3>السؤال الأكبر</h3>
+                <p>
+                    السودان بلد غني بالموارد: ذهب، أراضٍ زراعية، نيل، ثروة حيوانية، صمغ عربي.
+                    <br>لكن المواطن يعاني من نقص الخبز والوقود والدواء.
+                    <br><strong>أين تذهب هذه الثروات؟</strong>
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">ماذا تقول لنا هذه الأرقام؟</div>
+                <div class="insight-box">
+                    <h4>الاقتصاد السوداني يعاني من مشاكل هيكلية عميقة</h4>
+                    <ul>
+                        <li><strong>اعتماد خطير على سلعة واحدة:</strong> 59% من الصادرات ذهب. أي انخفاض في سعره العالمي يضرب الاقتصاد.</li>
+                        <li><strong>فشل في تنويع الصادرات:</strong> القطن، السمسم، الفول السوداني - كلها انهارت مقارنة بعقود سابقة.</li>
+                        <li><strong>عجز عن الاكتفاء الغذائي:</strong> رغم الأراضي والمياه، نستورد طعامنا بمليارات الدولارات.</li>
+                        <li><strong>تركز جغرافي خطير:</strong> نصف صادراتنا لدولة واحدة، ونعتمد على 5 دول للاستيراد.</li>
+                        <li><strong>تصدير خامات بدل منتجات:</strong> نصدر الذهب والصمغ والسمسم خاماً بدل تصنيعه.</li>
+                    </ul>
+                </div>
+                <div class="insight-box warning">
+                    <h4>الحرب تسرّع الانهيار لكنها ليست السبب الوحيد</h4>
+                    <p>
+                        قبل أبريل 2023، كان العجز التجاري موجوداً منذ عقود. 
+                        الحرب كشفت هشاشة كانت موجودة أصلاً. 
+                        حتى لو انتهت الحرب غداً، الاقتصاد يحتاج إصلاحات جذرية ليقف على قدميه.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>
+            المصدر: <a href="http://www.cbos.gov.sd" target="_blank">بنك السودان المركزي</a> - الموجز الإحصائي للتجارة الخارجية
+        </p>
+    </footer>
+
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Tabs
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Chart.js RTL and font
+        Chart.defaults.font.family = "'IBM Plex Sans Arabic', sans-serif";
+
+        // Simple color palette
+        const colors = {
+            green: '#27ae60',
+            red: '#e74c3c',
+            blue: '#3498db',
+            yellow: '#f1c40f',
+            primary: '#1b4144',
+            gray: '#95a5a6'
+        };
+
+        // Decade Chart - Trade Balance
+        new Chart(document.getElementById('decadeChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025*'],
+                datasets: [{
+                    label: 'الصادرات',
+                    data: [3.17, 3.09, 4.10, 3.48, 3.73, 3.80, 5.03, 4.36, 3.63, 3.13, 2.38],
+                    backgroundColor: colors.green,
+                    borderRadius: 4
+                }, {
+                    label: 'الواردات',
+                    data: [9.51, 8.31, 9.13, 7.85, 9.29, 9.84, 9.89, 11.09, 7.50, 4.91, 5.70],
+                    backgroundColor: colors.red,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + ' مليار $'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'مليار دولار' }
+                    }
+                }
+            }
+        });
+
+        // Volume Chart
+        new Chart(document.getElementById('volumeChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025*'],
+                datasets: [{
+                    label: 'حجم التجارة الكلي',
+                    data: [12.68, 11.40, 13.23, 11.33, 13.02, 13.64, 14.92, 15.45, 11.13, 8.04, 8.08],
+                    borderColor: colors.primary,
+                    backgroundColor: 'rgba(27, 65, 68, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => 'حجم التجارة: ' + ctx.parsed.y + ' مليار $'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'مليار دولار' }
+                    }
+                }
+            }
+        });
+
+        // Exports Pie Chart
+        new Chart(document.getElementById('exportsPieChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['الذهب', 'الماشية', 'السمسم', 'الصمغ العربي', 'حب البطيخ', 'القطن', 'أخرى'],
+                datasets: [{
+                    data: [1050, 289, 181, 67, 46, 45, 108],
+                    backgroundColor: [
+                        colors.yellow,
+                        colors.primary,
+                        colors.green,
+                        colors.red,
+                        colors.blue,
+                        colors.gray,
+                        '#bdc3c7'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = ((ctx.parsed / total) * 100).toFixed(0);
+                                return ctx.label + ': ' + ctx.parsed + ' م $ (' + pct + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Exports Timeline Chart
+        new Chart(document.getElementById('exportsTimelineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2022', '2024'],
+                datasets: [{
+                    label: 'الذهب',
+                    data: [1221, 1480, 2022, 1570],
+                    borderColor: colors.yellow,
+                    backgroundColor: colors.yellow,
+                    borderWidth: 3,
+                    tension: 0.3
+                }, {
+                    label: 'السمسم',
+                    data: [772, 789, 488, 330],
+                    borderColor: colors.green,
+                    backgroundColor: colors.green,
+                    borderWidth: 3,
+                    tension: 0.3
+                }, {
+                    label: 'الماشية',
+                    data: [588, 367, 449, 531],
+                    borderColor: colors.primary,
+                    backgroundColor: colors.primary,
+                    borderWidth: 3,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + ' مليون $'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'مليون دولار' }
+                    }
+                }
+            }
+        });
+
+        // Imports Pie Chart
+        new Chart(document.getElementById('importsPieChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['المواد الغذائية', 'السلع المصنعة', 'الآلات والمعدات', 'الكيماويات والأدوية', 'البترول', 'أخرى'],
+                datasets: [{
+                    data: [1296, 637, 629, 548, 364, 804],
+                    backgroundColor: [
+                        colors.red,
+                        colors.primary,
+                        colors.blue,
+                        colors.green,
+                        colors.gray,
+                        '#bdc3c7'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = ((ctx.parsed / total) * 100).toFixed(0);
+                                return ctx.label + ': ' + ctx.parsed + ' م $ (' + pct + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Imports Timeline Chart
+        new Chart(document.getElementById('importsTimelineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2022', '2024'],
+                datasets: [{
+                    label: 'القمح والدقيق',
+                    data: [2697, 2770, 2854, 1249],
+                    borderColor: colors.red,
+                    backgroundColor: colors.red,
+                    borderWidth: 3,
+                    tension: 0.3
+                }, {
+                    label: 'البترول',
+                    data: [1792, 1250, 2897, 891],
+                    borderColor: colors.gray,
+                    backgroundColor: colors.gray,
+                    borderWidth: 3,
+                    tension: 0.3
+                }, {
+                    label: 'الأدوية',
+                    data: [367, 340, 572, 300],
+                    borderColor: colors.green,
+                    backgroundColor: colors.green,
+                    borderWidth: 3,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + ' مليون $'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'مليون دولار' }
+                    }
+                }
+            }
+        });
+
+        // Export Destinations Chart
+        new Chart(document.getElementById('exportDestChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['الإمارات', 'السعودية', 'مصر', 'الصين', 'الهند'],
+                datasets: [{
+                    label: 'الصادرات',
+                    data: [2233, 505, 413, 285, 94],
+                    backgroundColor: colors.green,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ctx.parsed.x + ' مليون $'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'مليون دولار' }
+                    }
+                }
+            }
+        });
+
+        // Import Sources Chart
+        new Chart(document.getElementById('importSourceChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['الإمارات', 'الصين', 'السعودية', 'الهند', 'مصر'],
+                datasets: [{
+                    label: 'الواردات',
+                    data: [2233, 1186, 1131, 891, 821],
+                    backgroundColor: colors.red,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ctx.parsed.x + ' مليون $'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'مليون دولار' }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
